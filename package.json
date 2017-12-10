@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "start": "./scripts/setup.js && DEBUG=* homebridge -D -U ./config.json -P ."
   },
   "repository": {
     "type": "git",

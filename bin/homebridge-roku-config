@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { generateConfig, mergeCofnig, HOMEBRIDGE_CONFIG } = require('../src/setup');
+const { generateConfig, mergeConfigWithMaster, HOMEBRIDGE_CONFIG } = require('../src/setup');
 
 const args = process.argv.slice(2);
 const shouldMerge = args[0] === '--merge';
@@ -8,7 +8,7 @@ const shouldMerge = args[0] === '--merge';
 generateConfig()
   .then((config) => {
     if (shouldMerge) {
-      mergeConfig(config);
+      mergeConfigWithMaster(config);
       console.log(`Added roku accessory configuration to ${HOMEBRIDGE_CONFIG}`);
     } else {
       console.log(JSON.stringify(config, null, 4));

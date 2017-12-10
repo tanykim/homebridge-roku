@@ -37,14 +37,33 @@ function generateConfig() {
 }
 
 /**
+ * Merge two config files together. Assumes that
+ * string arguments are file names and loads them
+ * before merging.
+ * @param {Object|string} configA
+ * @param {Object|string} configB
+ * @return {Object} The merged config.
+ */
+function mergeConfigs(configA, configB) {
+  function readConfig(name) {
+    if (typeof name === 'string') {
+      return JSON.parse(fs.readFileSync(name));
+    }
+    return name
+  }
+  configA = readConfig(configA);
+  configB = readConfig(configB);
+  return deepmerge(configA, configB);
+}
+
+/**
  * Merge the given config object with the existing homebridge config.
  * @param {Object} toMerge
  */
-function mergeConfig(toMerge) {
+function mergeConfigWithMaster(toMerge) {
   try {
-    const config = JSON.parse(fs.readFileSync(HOMEBRIDGE_CONFIG));
-    const merged = deepmerge(config, toMerge);
-    fs.writeFileSync(JSON.stringify(merged, null, 4));
+    const merged = mergeConfigs(HOMEBRIDGE_CONFIG, toMerge);
+    fs.writeFileSync(HOMEBRIDGE_CONFIG, JSON.stringify(merged, null, 4));
   } catch (err) {
     console.error(`There was a problem merging the config: ${err}`);
   }
@@ -52,6 +71,7 @@ function mergeConfig(toMerge) {
 
 module.exports = {
   generateConfig,
-  mergeConfig,
+  mergeConfigs,
+  mergeConfigWithMaster,
   HOMEBRIDGE_CONFIG,
 };
