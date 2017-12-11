@@ -10,14 +10,14 @@ function readFileSync(fname) {
   return READ_FILE;
 }
 
-let WRITTEN_FILE = null;
+let WRITTEN_FILES = {};
 
-function __getWrittenFile() {
-  return WRITTEN_FILE;
+function __getWrittenFile(name) {
+  return WRITTEN_FILES[name];
 }
 
-function writeFileSync(file) {
-  WRITTEN_FILE = file;
+function writeFileSync(name, file) {
+  WRITTEN_FILES[name] = file;
 }
 
 fs.readFileSync = readFileSync;

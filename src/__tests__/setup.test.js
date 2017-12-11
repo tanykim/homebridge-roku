@@ -1,4 +1,4 @@
-const { generateConfig, mergeConfig } = require('../setup');
+const { generateConfig, mergeConfigWithMaster, HOMEBRIDGE_CONFIG } = require('../setup');
 
 jest.mock('nodeku');
 jest.mock('fs');
@@ -41,8 +41,7 @@ describe('setup', () => {
 
   });
 
-  describe('#mergeConfig()', () => {
-
+  describe('#mergeConfigWithMaster()', () => {
     beforeEach(() => {
       require('fs').__setReadFile(JSON.stringify({
         bridge: {
@@ -59,7 +58,7 @@ describe('setup', () => {
     });
 
     it('should combine the existing config with the given config', () => {
-      mergeConfig({
+      mergeConfigWithMaster({
         accessories: [
           {
             accessory: 'Roku',
@@ -69,7 +68,7 @@ describe('setup', () => {
         ],
       });
 
-      const written = JSON.parse(require('fs').__getWrittenFile());
+      const written = JSON.parse(require('fs').__getWrittenFile(HOMEBRIDGE_CONFIG));
       expect(written).toEqual({
         bridge: {
           name: 'homebridge',
