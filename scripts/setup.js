@@ -24,7 +24,7 @@ generateConfig().then((config) => {
     console.log(`${HOMEBRIDGE_CONFIG} does not exist, using sample config`);
     merged = mergeConfigs(sampleConfig, config);
   }
-  fs.writeFileSync(configFile, JSON.stringify(merged, null, 4));
+  fs.writeFileSync(configFile, JSON.stringify(merged, null, 2));
 }).catch((err) => {
   console.error('failed to configure development config file', err);
   process.exit(1);

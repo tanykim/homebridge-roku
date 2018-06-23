@@ -13,7 +13,7 @@ generateConfig()
       mergeConfigWithMaster(config);
       console.log(`Added roku accessory configuration to ${HOMEBRIDGE_CONFIG}`);
     } else {
-      console.log(JSON.stringify(config, null, 4));
+      console.log(JSON.stringify(config, null, 2));
     }
   }).catch((err) => {
     console.error(err.stack);
